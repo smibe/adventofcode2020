@@ -1,33 +1,22 @@
-open System
+#r "nuget:unquote"
 open System.IO
+open Swensen.Unquote
 
 let inputFile = __SOURCE_DIRECTORY__ + "/day1.input"
 let input = 
     File.ReadAllLines(inputFile) |> Array.map int |> Array.toList
 
-let FindMatch1 input s = 
-    let found = 
-        input 
-        |> List.map (fun x -> if x = s then x else -1)
-        |> List.filter (fun x -> x >= 0)
-    if Seq.isEmpty found then -1 else Seq.head found
-
-
-let rec FindMatch2 input s = 
+let rec searchSumAndMutiply searchSum input s = 
     match input with
     | [] -> -1
     | head::tail -> 
-        let foundMatch = FindMatch1 tail (s - head)
-        if foundMatch = -1 then FindMatch2 tail s else foundMatch * head
+        let foundMatch = searchSum tail (s - head)
+        if foundMatch = -1 then searchSumAndMutiply searchSum tail s else foundMatch * head
 
-let rec FindMatch3 input s = 
-    match input with
-    | [] -> -1
-    | head::tail -> 
-        let foundMatch = FindMatch2 tail (s - head)
-        if foundMatch = -1 then FindMatch3 tail s else foundMatch * head
+let searchSumAndMutiply1 = searchSumAndMutiply (fun l s ->  if s = 0 then 1 else -1)
+let searchSumAndMutiply2 = searchSumAndMutiply SearchSumAndMutiply1
+let searchSumAndMutiply3 = searchSumAndMutiply SearchSumAndMutiply2
 
 
-let a = [5; 1; 34; 55; 20; 6; 1000; 2000]
-FindMatch2 a 2020
-FindMatch2 input 2020
+searchSumAndMutiply2 input 2020 =! 1016131
+searchSumAndMutiply3 input 2020 =! 276432018
