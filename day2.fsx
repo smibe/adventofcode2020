@@ -44,12 +44,8 @@ verifyPassword2 "1-3 a: abcde" =! true
 verifyPassword2 "1-3 b: cdefg" =! false
 verifyPassword2 "2-9 c: ccccccccc" =! false
 
-let result1 = 
-    File.ReadAllLines(inputFile) |> Seq.map verifyPassword1 |> Seq.filter (fun x -> x) |> Seq.length
-
+let result1 = File.ReadAllLines(inputFile) |> Seq.map verifyPassword1 |> count true
 result1 =! 418
 
-let result2 = 
-    File.ReadAllLines(inputFile) |> Seq.map verifyPassword2 |> Seq.filter (fun x -> x) |> Seq.length
-
+let result2 = File.ReadAllLines(inputFile) |> Seq.map verifyPassword2 |> count true
 result2 =! 616
