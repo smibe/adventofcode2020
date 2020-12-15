@@ -14,8 +14,8 @@ let rec searchSumAndMutiply searchSum input s =
         if foundMatch = -1 then searchSumAndMutiply searchSum tail s else foundMatch * head
 
 let searchSumAndMutiply1 = searchSumAndMutiply (fun l s ->  if s = 0 then 1 else -1)
-let searchSumAndMutiply2 = searchSumAndMutiply SearchSumAndMutiply1
-let searchSumAndMutiply3 = searchSumAndMutiply SearchSumAndMutiply2
+let searchSumAndMutiply2 = searchSumAndMutiply searchSumAndMutiply1
+let searchSumAndMutiply3 = searchSumAndMutiply searchSumAndMutiply2
 
 
 searchSumAndMutiply2 input 2020 =! 1016131
